@@ -6,7 +6,7 @@ package:
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/font-v-{{ version }}.tar.gz
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/font-v-{{ version }}.tar.gz
   sha256: 5c7dca0604a7ddf04633502c792364f3e1027d8fce4e44ffb8014ae38466bdd0
 
 build:
@@ -14,17 +14,18 @@ build:
     - font-v = fontv.app:main
   noarch: python
   script: {{ PYTHON }} -m pip install . -vv
-  number: 0
+  number: 1
 
 requirements:
   host:
     - pip
-    - python >=3.7
+    - python {{ python_min }}
+    - setuptools
   run:
     - fonttools
     - git
     - gitpython
-    - python >=3.7
+    - python >={{ python_min }}
 
 test:
   imports:
@@ -34,6 +35,7 @@ test:
     - font-v --help
   requires:
     - pip
+    - python {{ python_min }}
 
 about:
   home: https://github.com/source-foundry/font-v
